@@ -1,0 +1,51 @@
+; Options -Indexes # منع تصفح المجلدات
+; Options +FollowSymLinks
+
+; RewriteEngine On
+
+; # --- توجيهات أساسية ---
+
+; # إزالة .php من نهاية الروابط (إذا أردت روابط أنظف)
+; RewriteCond %{REQUEST_FILENAME} !-d
+; RewriteCond %{REQUEST_FILENAME}\.php -f
+; RewriteRule ^(.*)$ $1.php [NC,L]
+
+; # فرض HTTPS (إذا كان لديك شهادة SSL) - قم بإزالة التعليق إذا لزم الأمر
+; # RewriteCond %{HTTPS} off
+; # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+; # --- توجيهات خاصة بالتطبيق (أمثلة) ---
+
+; # مثال: توجيه /car/123 إلى car_details.php?id=123
+; RewriteRule ^car/([0-9]+)$ car_details.php?id=$1 [NC,L]
+
+; # مثال: توجيه /search إلى search_results.php
+; RewriteRule ^search$ search_results.php [NC,L]
+
+; # مثال: توجيه /profile إلى user_dashboard.php
+; RewriteRule ^profile$ user_dashboard.php [NC,L]
+
+
+; # --- حماية ملفات معينة ---
+; # منع الوصول المباشر إلى ملفات في مجلد includes أو api (إذا كانت ستُستدعى فقط من PHP)
+; # <FilesMatch "\.(php|phtml)$">
+; #  <If "-f '/path/to/your/project/car_rental/includes/%{REMOTE_FILENAME}' OR -f '/path/to/your/project/car_rental/api/%{REMOTE_FILENAME}'">
+; #   Require all denied
+; #  </If>
+; # </FilesMatch>
+; # هذا الجزء أعلاه قد يكون معقداً للتطبيق بشكل صحيح وقد يحتاج إلى تعديل حسب بيئة الخادم.
+; # بديل أبسط لمنع الوصول إلى مجلدات معينة بالكامل:
+; # RewriteRule ^includes/.*$ - [F,L]
+; # RewriteRule ^api/internal_only/.*$ - [F,L] # إذا كان لديك API داخلي فقط
+
+; # إذا كنت تريد توجيه كل الطلبات غير الموجودة إلى public/index.php (لنمط Front Controller)
+; # RewriteCond %{REQUEST_FILENAME} !-f
+; # RewriteCond %{REQUEST_FILENAME} !-d
+; # RewriteRule ^(.*)$ public/index.php?url=$1 [QSA,L]
+; # (هذا إذا كنت ستستخدم public/index.php كنقطة دخول رئيسية)
+
+; # التعامل مع الأصول الثابتة بشكل طبيعي
+; RewriteCond %{REQUEST_URI} !\.(?:css|js|jpe?g|gif|png|woff|ttf|svg|ico)$ [NC]
+; # أضف هنا أي قواعد أخرى قبل القاعدة العامة لـ .php
+
+; ErrorDocument 404 /404.php # ستحتاج لإنشاء ملف 404.php

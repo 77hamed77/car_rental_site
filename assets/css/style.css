@@ -1,0 +1,909 @@
+/* أساسيات */
+
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Bebas+Neue&family=Cairo:wght@200..1000&family=Doto:wght@100..900&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+/* assets/css/style.css */
+
+/* --- CSS Variables (المتغيرات) --- */
+:root {
+    /* === الألوان الأساسية === */
+    --primary-color: #007bff;       /* اللون الأزرق الأساسي (للهوية الرئيسية، الروابط، الأزرار) */
+    --primary-color-dark: #0056b3;  /* درجة أغمق من اللون الأساسي (لتأثير hover مثلاً) */
+    --primary-color-light: #5cacee; /* درجة أفتح من اللون الأساسي (لأيقونات داخلية أو تفاصيل) */
+
+    --secondary-color: #6c757d;     /* اللون الرمادي الثانوي (للنصوص الأقل أهمية، الحدود، الخلفيات الثانوية) */
+    --secondary-color-dark: #5a6268;
+
+    --accent-color: #ff6000;        /* لون مميز (برتقالي، للأزرار الهامة، نداءات الإجراء) */
+    --accent-color-dark: #e05500;   /* درجة أغمق من اللون المميز */
+
+    /* === ألوان النصوص === */
+    --text-color: #333;             /* لون النص الرئيسي (داكن) */
+    --text-color-muted: #666;       /* لون نص باهت قليلاً (للتفاصيل الصغيرة) */
+    --light-text-color: #f8f9fa;    /* لون النص الفاتح (يستخدم على الخلفيات الداكنة) */
+    --link-color: var(--primary-color); /* لون الروابط الافتراضي */
+    --link-hover-color: var(--primary-color-dark);
+
+    /* === ألوان الخلفيات === */
+    --body-bg-color: #f4f4f4;       /* لون خلفية الجسم الرئيسية (فاتح جدًا) */
+    --light-bg-color: #f8f9fa;      /* لون خلفية فاتح للأقسام أو البطاقات */
+    --dark-bg-color: #2c3e50;        /* لون خلفية داكن للأقسام (مثل الفوتر أو قسم "كيف يعمل") */
+                                     /*  يمكنك استخدام #343a40 أيضًا إذا فضلت */
+
+    /* === ألوان Navbar (يمكن تخصيصها بشكل منفصل) === */
+    --navbar-bg-color: #ffffff;       /* خلفية شريط التنقل (بيضاء) */
+    --navbar-text-color: var(--text-color); /* لون نص الروابط في شريط التنقل */
+    --navbar-link-hover-color: var(--primary-color);
+    --navbar-border-color: #e9ecef;  /* لون حدود خفيف للـ Navbar إذا استخدمت حد سفلي */
+
+    /* === ألوان الحدود === */
+    --border-color: #dee2e6;        /* لون الحدود العام (للحقول، البطاقات، إلخ) */
+    --border-color-light: #f0f0f0;  /* لون حدود أخف */
+
+    /* === ألوان الحالة (للتنبيهات، الشارات) === */
+    --success-color: #28a745;
+    --success-bg-color: #d4edda;
+    --success-border-color: #c3e6cb;
+    --success-text-color: #155724;
+
+    --danger-color: #dc3545;
+    --danger-bg-color: #f8d7da;
+    --danger-border-color: #f5c6cb;
+    --danger-text-color: #721c24;
+
+    --warning-color: #ffc107;
+    --warning-bg-color: #fff3cd;
+    --warning-border-color: #ffeeba;
+    --warning-text-color: #856404;
+
+    --info-color: #17a2b8;
+    --info-bg-color: #d1ecf1;
+    --info-border-color: #bee5eb;
+    --info-text-color: #0c5460;
+
+    /* === الظلال === */
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* ظل خفيف للبطاقات */
+    --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --navbar-shadow: 0 2px 5px rgba(0,0,0,0.07);
+
+    /* === الخطوط === */
+    --font-family-base: 'Tahoma', 'Helvetica Neue', Arial, sans-serif; /* خط الجسم الرئيسي */
+    --font-family-headings: 'Helvetica Neue', 'Segoe UI', Tahoma, Arial, sans-serif; /* خط العناوين (يمكن أن يكون نفس الأساسي) */
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+
+    /* === نصف قطر الحدود (Border Radius) === */
+    --border-radius-sm: 0.2rem;  /* 3.2px إذا كان الأساسي 16px */
+    --border-radius-base: 0.375rem; /* 6px */
+    --border-radius-lg: 0.5rem;   /* 8px */
+
+    /* === نقاط التوقف (Breakpoints) للتجاوبية (اختياري، ولكن مفيد) === */
+    /* --breakpoint-xs: 0; (لا يستخدم عادةً) */
+    /* --breakpoint-sm: 576px; */
+    /* --breakpoint-md: 768px; */
+    /* --breakpoint-lg: 992px; */
+    /* --breakpoint-xl: 1200px; */
+    /* --breakpoint-xxl: 1400px; */
+}
+
+/* ... بقية أنماط CSS الخاصة بك تبدأ من هنا ... */
+
+/* مثال على استخدام المتغيرات:
+.some-element {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border-radius: var(--border-radius-base);
+    font-family: var(--font-family-base);
+}
+*/
+body {
+    font-family: cairo;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #333;
+    direction: rtl; /* دعم اللغة العربية */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    
+    direction: rtl; /* دعم اللغة العربية */
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #007bff; /* أزرق مشابه لـ rentalcars */
+    color: #fff;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar .logo {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.navbar .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.navbar .nav-links li {
+    margin-right: 20px; /* معكوس بسبب dir=rtl */
+}
+.navbar .nav-links li:last-child {
+    margin-right: 0;
+}
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-left: 10px;
+}
+.navbar .nav-links a:hover {
+    color: #0d0049;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.281);
+}
+
+/* الأزرار */
+.btn {
+    display: inline-block;
+    background: #ff6000; /* برتقالي مميز */
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background: #e05500;
+}
+.btn-primary {
+    background-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
+/* Hero Section */
+.hero {
+    background: #003b64 url('path/to/your/hero-image.jpg') no-repeat center center/cover; /* ضع صورة خلفية مناسبة */
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Search Form */
+.search-form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap; /* للسماح بالتفاف العناصر في الشاشات الصغيرة */
+    gap: 15px; /* مسافة بين عناصر النموذج */
+    align-items: flex-end; /* لمحاذاة زر البحث مع الحقول */
+}
+.search-form .form-group {
+    flex: 1; /* لجعل الحقول تأخذ مساحة متساوية */
+    min-width: 200px; /* حد أدنى لعرض الحقل */
+    display: flex;
+    flex-direction: column;
+}
+.search-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+    text-align: right; /* محاذاة النص لليمين */
+}
+.search-form input[type="text"],
+.search-form input[type="datetime-local"], /* أو استخدم flatpickr */
+.search-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* لتضمين padding و border داخل width */
+}
+.search-form button[type="submit"] {
+    padding: 12px 25px;
+    align-self: flex-end; /* لزر البحث */
+}
+
+
+/* Car Grid & Cards */
+.featured-cars, .search-results-page {
+    padding: 40px 0;
+}
+.featured-cars h2, .search-results-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+}
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+.car-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.car-card img {
+    max-width: 100%;
+    height: 180px; /* ارتفاع ثابت للصور */
+    object-fit: cover; /* للحفاظ على نسبة العرض إلى الارتفاع */
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.car-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    color: #007bff;
+}
+.car-card p {
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* How it works */
+.how-it-works {
+    background-color: #fff;
+    padding: 40px 0;
+    text-align: center;
+}
+.how-it-works h2 {
+    margin-bottom: 30px;
+}
+.steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.step {
+    flex-basis: 30%;
+    padding: 20px;
+    margin-bottom: 20px; /* للهواتف */
+}
+.step i { /* للأيقونات */
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+/* Auth Forms (Login/Register) */
+.auth-form {
+    background: #fff;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+.auth-form .form-group {
+    margin-bottom: 15px;
+}
+.auth-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.auth-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+}
+.auth-form p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-danger ul {
+    margin: 0;
+    padding-right: 20px; /* بسبب dir=rtl */
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+    }
+    .navbar .nav-links {
+        margin-top: 10px;
+        flex-direction: column;
+        text-align: center;
+    }
+    .navbar .nav-links li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .search-form {
+        flex-direction: column;
+        align-items: stretch; /* لجعل العناصر تمتد بكامل العرض */
+    }
+    .search-form .form-group {
+        min-width: auto; /* إلغاء الحد الأدنى للعرض */
+    }
+    .search-form button[type="submit"] {
+        width: 100%; /* جعل الزر يأخذ كامل العرض */
+    }
+    .steps {
+        flex-direction: column;
+    }
+    .step {
+        flex-basis: 100%;
+    }
+}
+
+/* --- General Enhancements --- */
+body.homepage { /* لتمييز أنماط الصفحة الرئيسية */
+    /* ... */
+}
+.section-padding { padding: 60px 0; }
+.bg-light { background-color: #f8f9fa; } /* لون خلفية فاتح */
+.bg-dark { background-color: #343a40; } /* لون خلفية داكن */
+.text-light { color: #f8f9fa !important; }
+.text-light h2, .text-light h3, .text-light p { color: #f8f9fa !important; }
+.text-center { text-align: center; }
+.btn-block { display: block; width: 90%; margin: auto;}
+.btn-lg { padding: 0.8rem 1.5rem; font-size: 1.1rem; }
+
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
+}
+.section-title::after { /* خط زخرفي تحت العنوان */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color, #007bff); /* استخدم متغير CSS إذا كان لديك */
+}
+
+/* --- Hero Section --- */
+.hero-section.modern-hero {
+    position: relative;
+    color: #fff;
+    padding: 120px 0; /* زيادة الحشوة */
+    text-align: center;
+    overflow: hidden; /* لمنع الصورة من الخروج عند تأثير parallax */
+    min-height: 90vh; /* لجعل قسم الهيرو يأخذ معظم ارتفاع الشاشة */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/home.png'); /* **ضع مسار صورة خلفية جذابة هنا** */
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+    /* (اختياري) تأثير Parallax بسيط */
+    transition: transform 0.2s ease-out;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* تغميق الخلفية */
+    z-index: 2;
+}
+.hero-content {
+    position: relative;
+    z-index: 3;
+}
+.hero-title {
+    font-size: 3rem; /* أكبر */
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* --- Main Search Form (Elevated) --- */
+.main-search-form.elevated-form {
+    background: rgba(255, 255, 255, 0.95); /* خلفية بيضاء شبه شفافة */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 800px; /* تحديد عرض أقصى */
+    margin: 0 auto;
+}
+.main-search-form .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* للسماح بالتفاف العناصر */
+}
+.main-search-form .form-group-inline {
+    flex: 1;
+    min-width: 200px; /* لضمان عدم ضغط الحقول كثيراً */
+}
+.main-search-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9em;
+    text-align: right;
+}
+.main-search-form label i { margin-left: 5px; color: var(--primary-color, #007bff); }
+.main-search-form select,
+.main-search-form input.hero-datepicker {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.main-search-form .submit-row {
+    justify-content: center;
+    margin-top: 10px;
+}
+.btn-hero-search {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.btn-hero-search i { margin-left: 8px; }
+
+
+/* --- Features Section --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.feature-item {
+    padding: 25px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.feature-icon {
+    margin-bottom: 15px;
+    color: var(--primary-color, #007bff);
+}
+.feature-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+.feature-item p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* --- Featured Cars Section (Car Card v2) --- */
+.modern-car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+.car-card-v2 {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.car-card-v2:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+.car-card-v2-image {
+    position: relative;
+    height: 200px; /* ارتفاع ثابت للصورة */
+}
+.car-card-v2-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.car-card-v2-price-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--primary-color, #007bff);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.car-card-v2-content {
+    padding: 20px;
+    flex-grow: 1; /* لجعل المحتوى يملأ المساحة إذا كانت البطاقات مختلفة الارتفاع */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.car-card-v2-title {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #333;
+}
+.car-card-v2-title small { font-size: 0.85em; color: #777; }
+.car-card-v2-category {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+.car-card-v2-category i { margin-left: 5px; }
+.car-card-v2-features {
+    display: flex;
+    justify-content: space-around; /* أو space-between */
+    font-size: 0.85em;
+    color: #555;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+.car-card-v2-features span { display: flex; align-items: center; gap: 5px; }
+.car-card-v2-features i { color: var(--primary-color-light, #5cacee); } /* لون أفتح للأيقونات الداخلية */
+.btn-outline-primary { /* زر تفاصيل السيارة */
+    border: 1px solid var(--primary-color, #007bff);
+    color: var(--primary-color, #007bff);
+    background-color: transparent;
+}
+.btn-outline-primary:hover {
+    background-color: var(--primary-color, #007bff);
+    color: #fff;
+}
+
+
+/* --- Car Categories Section --- */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.category-card {
+    display: block; /* لجعل الرابط يأخذ كامل مساحة البطاقة */
+    background: #fff;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.category-icon {
+    font-size: 2rem; /* حجم أيقونة الفئة */
+    color: var(--primary-color, #007bff);
+    margin-bottom: 15px;
+}
+.category-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+.category-card p {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.5;
+}
+
+/* --- How It Works v2 Section --- */
+.how-it-works-v2 .section-title::after { background-color: #fff; } /* لون الخط تحت العنوان للقسم الداكن */
+.steps-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.step-item-v2 {
+    padding: 20px;
+    /* background: rgba(255,255,255,0.05); /* خلفية شفافة قليلاً إذا كان bg-dark */
+    /* border-radius: 8px; */
+}
+.step-icon-v2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* حجم الأيقونة */
+    color: var(--primary-color, #007bff); /* يمكن تغييره ليتناسب مع الخلفية الداكنة */
+    position: relative;
+    display: inline-block; /* ليتوسط الرقم والأيقونة */
+}
+.step-icon-v2 .step-number { /* رقم الخطوة */
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: var(--primary-color, #007bff);
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 0.7em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff; /* حدود بيضاء حول الرقم */
+}
+.step-item-v2 h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+.step-item-v2 p {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+/* footer */
+/* assets/css/style.css */
+
+/* ... (المتغيرات والأنماط الأخرى) ... */
+
+/* --- Footer (التذييل المطور) --- */
+.site-footer {
+    background-color: var(--dark-bg-color); /* #2c3e50 أو #343a40 */
+    color: #adb5bd; /* لون نص أفتح قليلاً من الأبيض النقي على الخلفية الداكنة */
+    padding: 50px 0 0; /* حشوة علوية، السفلية ستكون من .footer-bottom */
+    font-size: 0.95em;
+    line-height: 1.7;
+}
+
+.footer-widgets-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-widget .widget-title {
+    font-size: 1.25rem;
+    color: #fff; /* عنوان الودجت بلون أبيض */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+/* خط زخرفي صغير تحت عنوان الودجت */
+.footer-widget .widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    right: 29%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 2px;
+    background-color: var(--accent-color); /* لون مميز */
+}
+
+.footer-widget .footer-logo {
+    font-size: 1.5rem; /* نفس حجم الشعار في النافبار أو أصغر قليلاً */
+    font-weight: 700;
+    color: #fff; /* شعار أبيض */
+    text-decoration: none;
+}
+.footer-widget .footer-logo i {
+    margin-left: 8px;
+    color: var(--accent-color); /* أيقونة الشعار بلون مميز */
+}
+
+.footer-widget .about-text {
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-social-icons a {
+    color: #adb5bd;
+    font-size: 1.2rem;
+    margin-left: 15px; /* مسافة بين الأيقونات (معكوسة في RTL) */
+    transition: color 0.2s ease;
+}
+.footer-social-icons a:hover {
+    color: var(--accent-color);
+}
+
+.footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links-list li {
+    margin-bottom: 10px;
+}
+.footer-links-list li a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.2s ease, padding-right 0.2s ease;
+}
+.footer-links-list li a:hover {
+    color: #fff;
+    padding-right: 5px; /* تأثير تحريك بسيط عند المرور */
+}
+.footer-links-list li a::before { /* نقطة صغيرة قبل الرابط (اختياري) */
+    content: "\f104"; /* أيقونة FontAwesome (chevron-left، ستظهر كـ chevron-right في RTL) */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-left: 8px;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.footer-contact-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-contact-info li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.footer-contact-info li i {
+    margin-left: 10px;
+    width: 20px; /* لعرض الأيقونات بشكل متناسق */
+    text-align: center;
+    color: var(--accent-color); /* أيقونات الاتصال بلون مميز */
+    padding-top: 3px; /* محاذاة عمودية بسيطة */
+}
+.footer-contact-info li a {
+    color: #adb5bd;
+}
+.footer-contact-info li a:hover {
+    color: #fff;
+}
+
+.newsletter-form { /* (إذا أضفت نموذج النشرة الإخبارية) */
+    display: flex;
+    margin-top: 20px;
+}
+.newsletter-form input[type="email"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: var(--border-radius-base) 0 0 var(--border-radius-base);
+    outline: none;
+}
+.newsletter-form input[type="email"]::placeholder { color: #adb5bd; opacity: 0.8; }
+.newsletter-form button {
+    padding: 10px 15px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.newsletter-form button:hover { background-color: var(--accent-color-dark); }
+
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px; /* مسافة قبل خط حقوق النشر */
+}
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+.footer-bottom a {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+.footer-bottom a:hover {
+    color: #fff;
+}
